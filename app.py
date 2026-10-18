@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import joblib
+from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
 # Konfigurasi Halaman Dashboard
@@ -24,29 +25,25 @@ def load_data_and_model():
 
 df_monthly, model = load_data_and_model()
 
-# Menghitung Prediksi untuk Seluruh Data Historis (untuk evaluasi & grafik perbandingan)
-# Menggunakan fitur Lag-1 dan Lag-2 yang ada di dataframe
-if 'Lag_1' in df_monthly.columns and 'Lag_2' in df_monthly.columns:
-    X = df_monthly[['Lag_1', 'Lag_2']]
-    y_actual = df_monthly['Total_Sales']
-    y_pred = model.predict(X)
-    
-    # Hitung Metrik Evaluasi
-    mae = mean_absolute_error(y_actual, y_pred)
-    rmse = np.sqrt(mean_squared_error(y_actual, y_pred))
-    r2 = r2_score(y_actual, y_pred)
-else:
-    # Fallback jika kolom lag dibuat secara dinamis
+# Mempersiapkan fitur Lag dan Melakukan Split Data (80% Training, 20% Testing) sesuai eksperimen
+if 'Lag_1' not in df_monthly.columns or 'Lag_2' not in df_monthly.columns:
     df_monthly['Lag_1'] = df_monthly['Total_Sales'].shift(1)
     df_monthly['Lag_2'] = df_monthly['Total_Sales'].shift(2)
-    df_eval = df_monthly.dropna().copy()
-    X = df_eval[['Lag_1', 'Lag_2']]
-    y_actual = df_eval['Total_Sales']
-    y_pred = model.predict(X)
-    
-    mae = mean_absolute_error(y_actual, y_pred)
-    rmse = np.sqrt(mean_squared_error(y_actual, y_pred))
-    r2 = r2_score(y_actual, y_pred)
+
+df_model = df_monthly.dropna().copy()
+X = df_model[['Lag_1', 'Lag_2']]
+y = df_model['Total_Sales']
+
+# Menggunakan random_state yang konsisten (misal: 42) untuk pembagian data testing
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Melakukan prediksi pada data testing
+y_pred = model.predict(X_test)
+
+# Menghitung Metrik Evaluasi pada Data Testing
+mae = mean_absolute_error(y_test, y_pred)
+rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+r2 = r2_score(y_test, y_pred)
 
 # 1. Metrik Ringkasan Utama
 col1, col2, col3 = st.columns(3)
@@ -56,8 +53,8 @@ col3.metric("Rata-rata Penjualan Bulanan", f"US$ {df_monthly['Total_Sales'].mean
 
 st.markdown("---")
 
-# 2. Ringkasan Hasil Evaluasi Model (Sesuai Naskah Skripsi)
-st.subheader("🎯 Hasil Evaluasi Kinerja Model Random Forest")
+# 2. Ringkasan Hasil Evaluasi Model (Sesuai Pengujian Bab IV)
+st.subheader("🎯 Hasil Evaluasi Kinerja Model Random Forest (Data Testing)")
 ev_col1, ev_col2, ev_col3 = st.columns(3)
 ev_col1.metric("MAE (Mean Absolute Error)", f"US$ {mae:,.2f}")
 ev_col2.metric("RMSE (Root Mean Squared Error)", f"US$ {rmse:,.2f}")
@@ -69,12 +66,15 @@ st.markdown("---")
 st.subheader("📈 Grafik Tren Penjualan Bulanan (Global Superstore)")
 st.line_chart(df_monthly.set_index('Month')['Total_Sales'])
 
-# 4. Grafik Perbandingan Aktual vs Prediksi Model
-st.subheader("📉 Perbandingan Nilai Penjualan Aktual vs Hasil Prediksi Model")
+# 4. Grafik Perbandingan Aktual vs Prediksi pada Data Testing
+st.subheader("📉 Perbandingan Nilai Penjualan Aktual vs Hasil Prediksi (Data Testing)")
 df_comparison = pd.DataFrame({
-    'Aktual': y_actual.values if 'Lag_1' in df_monthly.columns else y_actual,
+    'Aktual': y_test.values,
     'Prediksi Model': y_pred
-}, index=df_monthly['Month'].iloc[-len(y_pred):] if 'Lag_1' in df_monthly.columns else df_eval['Month'])
+}, index=df_model.loc[X_test.index, 'Month'])
+
+# Urutkan berdasarkan tanggal agar grafik garis tersambung rapi
+df_comparison = df_comparison.sort_index()
 st.line_chart(df_comparison)
 
 # 5. Menampilkan Tabel Data Historis & Fitur Lag
