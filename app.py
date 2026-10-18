@@ -12,7 +12,7 @@ st.set_page_config(
     layout="wide"
 )
 
-# Custom CSS Bersih Tanpa Border Aneh
+# Custom CSS Bersih Total Tanpa Garis Aneh
 st.markdown("""
     <style>
     /* Memperbesar ukuran font dasar */
@@ -64,7 +64,7 @@ st.markdown("""
         margin-bottom: 15px;
     }
 
-    /* Kotak Konten Standar (Card White Bersih Tanpa Garis Samping) */
+    /* Kotak Konten Standar (Card White Bersih Sempurna) */
     .content-card {
         background-color: #ffffff !important;
         color: #0f172a !important;
@@ -73,10 +73,12 @@ st.markdown("""
         box-shadow: 0 4px 12px rgba(14, 165, 233, 0.08);
         margin-bottom: 20px;
         border: none !important;
+        outline: none !important;
     }
 
-    .content-card h4, .content-card p, .content-card b, .content-card li {
+    .content-card h4, .content-card p, .content-card b, .content-card li, .content-card div {
         color: #0f172a !important;
+        border: none !important;
     }
     
     /* Memperbesar teks di dalam komponen dataframe/tabel */
