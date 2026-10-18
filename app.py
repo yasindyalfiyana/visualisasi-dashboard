@@ -12,6 +12,27 @@ st.set_page_config(
     layout="wide"
 )
 
+# Custom Styling CSS untuk Memperbesar Teks Sidebar Navigasi & Mempercantik Tampilan
+st.markdown("""
+    <style>
+    /* Memperbesar ukuran teks pilihan menu radio di sidebar */
+    .stRadio label p {
+        font-size: 18px !important;
+        font-weight: 600 !important;
+    }
+    
+    /* Memperbesar judul widget di sidebar */
+    .stSidebar label {
+        font-size: 18px !important;
+    }
+
+    /* Mengatur gaya container utama */
+    .main {
+        background-color: #f4f6f9;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
 # Memuat Data Bersih dan Model Machine Learning
 @st.cache_resource
 def load_data_and_model():
@@ -39,16 +60,21 @@ mae = 50912.72
 rmse = 63448.37
 r2 = -1.0002
 
-# --- SIDEBAR: MENU NAVIGASI HALAMAN (BISA DIKLIK) ---
+# --- SIDEBAR: MENU NAVIGASI HALAMAN (Kini Hurufnya Lebih Besar) ---
 st.sidebar.title("📌 Navigasi Menu")
-pilihan_menu = st.sidebar.radio("Pilih Halaman:", ["🏠 Home (Beranda)", "📈 Analisis Tren & Visualisasi", "🎯 Evaluasi & Prediksi Model", "📋 Tabel Data Historis"])
+pilihan_menu = st.sidebar.radio("Pilih Halaman:", [
+    "🏠 Home (Beranda)", 
+    "📈 Analisis Tren & Visualisasi", 
+    "🎯 Evaluasi & Prediksi Model", 
+    "📋 Tabel Data Historis"
+])
 
 st.sidebar.markdown("---")
 st.sidebar.info("💡 **Info Skripsi:** Implementasi Random Forest & CRISP-DM.")
 
 
 # ==========================================
-# 1. HALAMAN HOME (BERANDA)
+# 1. HALAMAN HOME (BERANDA) - DENGAN IDENTITAS
 # ==========================================
 if pilihan_menu == "🏠 Home (Beranda)":
     st.title("📊 Selamat Datang di Dashboard Analisis & Prediksi Penjualan")
@@ -66,8 +92,28 @@ if pilihan_menu == "🏠 Home (Beranda)":
     col3.metric("🤖 Algoritma", "Random Forest")
 
     st.markdown("---")
+    
+    # Bagian Identitas Peneliti untuk Sidang Skripsi
+    st.subheader("🎓 Identitas Penelitian & Peneliti")
+    id_col1, id_col2 = st.columns(2)
+    with id_col1:
+        st.markdown("""
+        * **Nama Mahasiswa:** Yasindy Alfiyana
+        * **NIM:** 43230168
+        * **Program Studi:** Strata 1 (S1) Sistem Informasi
+        * **Perguruan Tinggi:** STMIK IKMI Cirebon
+        """)
+    with id_col2:
+        st.markdown("""
+        * **Tahun Akademik:** 2026 / 2027
+        * **Pembimbing Utama:** Khaerul Anam, M.Kom.
+        * **Pembimbing Kedua:** Umi Hayati, M.Kom.
+        * **Metodologi:** CRISP-DM & Random Forest Regression
+        """)
+
+    st.markdown("---")
     st.subheader("🚀 Fitur Utama Dashboard:")
-    st.write("1. **Home (Beranda):** Halaman pengantar dan informasi ringkas mengenai penelitian.")
+    st.write("1. **Home (Beranda):** Halaman pengantar, informasi penelitian, dan identitas penulis.")
     st.write("2. **Analisis Tren & Visualisasi:** Menampilkan grafik interaktif perkembangan penjualan bulanan.")
     st.write("3. **Evaluasi & Prediksi Model:** Menampilkan metrik evaluasi (MAE, RMSE, $R^2$) serta panel simulasi prediksi.")
     st.write("4. **Tabel Data Historis:** Menyediakan rincian data bersih beserta fitur *lag* yang digunakan.")
@@ -80,7 +126,6 @@ elif pilihan_menu == "📈 Analisis Tren & Visualisasi":
     st.title("📈 Analisis Tren Penjualan Kategori Technology")
     st.markdown("Visualisasi grafik interaktif perkembangan total penjualan bulanan berdasarkan data historis.")
 
-    # Ringkasan Metrik Cepat di Atas Grafik
     m1, m2, m3 = st.columns(3)
     m1.metric("Total Penjualan Keseluruhan", f"US$ {df_monthly['Total_Sales'].sum():,.0f}")
     m2.metric("Rata-rata Penjualan / Bulan", f"US$ {df_monthly['Total_Sales'].mean():,.0f}")
@@ -88,7 +133,6 @@ elif pilihan_menu == "📈 Analisis Tren & Visualisasi":
 
     st.markdown("---")
     
-    # Grafik Batang Interaktif (Tema Biru Profesional)
     fig_bar = px.bar(
         df_monthly, x='Month', y='Total_Sales',
         text_auto='.2s',
@@ -99,6 +143,9 @@ elif pilihan_menu == "📈 Analisis Tren & Visualisasi":
     fig_bar.update_layout(plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)')
     st.plotly_chart(fig_bar, use_container_width=True)
 
+    # Penjelasan Analisis Akademik (Nilai Plus di Depan Penguji)
+    st.info("💡 **Analisis Tren:** Berdasarkan grafik batang di atas, fluktuasi penjualan bulanan kategori Technology menunjukkan dinamika transaksi yang bervariasi dari tahun ke tahun, yang menjadi landasan penting dalam peramalan menggunakan Random Forest.")
+
 
 # ==========================================
 # 3. HALAMAN EVALUASI & PREDIKSI MODEL
@@ -107,7 +154,6 @@ elif pilihan_menu == "🎯 Evaluasi & Prediksi Model":
     st.title("🎯 Evaluasi Kinerja Model & Simulasi Prediksi")
     st.markdown("Evaluasi hasil pengujian model *Random Forest* pada data uji (*testing*) serta simulasi prediksi bulanan.")
 
-    # Kartu Metrik Evaluasi
     st.subheader("📉 Metrik Evaluasi Pengujian Model")
     e1, e2, e3 = st.columns(3)
     e1.metric("MAE (Mean Absolute Error)", f"US$ {mae:,.2f}")
@@ -116,7 +162,6 @@ elif pilihan_menu == "🎯 Evaluasi & Prediksi Model":
 
     st.markdown("---")
     
-    # Grafik Perbandingan Aktual vs Prediksi
     st.subheader("📉 Grafik Perbandingan: Nilai Aktual vs Prediksi Model")
     df_comparison = pd.DataFrame({
         'Aktual': y_test.values,
@@ -137,7 +182,6 @@ elif pilihan_menu == "🎯 Evaluasi & Prediksi Model":
 
     st.markdown("---")
     
-    # Bagian Simulasi Prediksi di Halaman Utama
     st.subheader("⚙️ Panel Simulasi Prediksi Bulanan")
     col_sim1, col_sim2 = st.columns(2)
     with col_sim1:
