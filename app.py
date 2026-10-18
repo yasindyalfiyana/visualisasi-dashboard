@@ -12,21 +12,26 @@ st.set_page_config(
     layout="wide"
 )
 
-# Custom CSS untuk Tema Biru Langit & Biru Laut (Ocean & Sky Blue Theme)
+# Custom CSS untuk Memperbesar Ukuran Font Secara Menyeluruh & Tema Biru
 st.markdown("""
     <style>
+    /* Memperbesar ukuran font dasar untuk seluruh teks aplikasi */
+    html, body, [class*="css"] {
+        font-size: 17px !important;
+    }
+
     /* Latar Belakang Utama */
     .main {
         background-color: #f0f7ff;
     }
     
-    /* Sidebar Styling */
+    /* Sidebar Styling & Ukuran Teks Menu */
     .stSidebar {
         background-color: #ffffff;
     }
     
     .stRadio label p {
-        font-size: 16px !important;
+        font-size: 18px !important;
         font-weight: 600 !important;
         color: #0f172a;
     }
@@ -35,7 +40,7 @@ st.markdown("""
     .metric-card-sky {
         background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
         color: white;
-        padding: 20px;
+        padding: 22px;
         border-radius: 12px;
         box-shadow: 0 4px 15px rgba(2, 132, 199, 0.25);
         margin-bottom: 15px;
@@ -44,7 +49,7 @@ st.markdown("""
     .metric-card-ocean {
         background: linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%);
         color: white;
-        padding: 20px;
+        padding: 22px;
         border-radius: 12px;
         box-shadow: 0 4px 15px rgba(3, 105, 161, 0.25);
         margin-bottom: 15px;
@@ -53,7 +58,7 @@ st.markdown("""
     .metric-card-navy {
         background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
         color: white;
-        padding: 20px;
+        padding: 22px;
         border-radius: 12px;
         box-shadow: 0 4px 15px rgba(30, 64, 175, 0.25);
         margin-bottom: 15px;
@@ -62,11 +67,17 @@ st.markdown("""
     /* Kotak Konten Standar (Card White dengan Aksen Biru) */
     .content-card {
         background-color: #ffffff;
-        padding: 24px;
+        padding: 26px;
         border-radius: 12px;
         box-shadow: 0 4px 12px rgba(14, 165, 233, 0.08);
         margin-bottom: 20px;
-        border-left: 5px solid #0284c7;
+        border-left: 6px solid #0284c7;
+        font-size: 17px;
+    }
+    
+    /* Memperbesar teks di dalam komponen dataframe/tabel */
+    .stDataFrame {
+        font-size: 16px !important;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -115,13 +126,13 @@ st.sidebar.info("💡 **Sistem Pendukung Keputusan:** Random Forest & CRISP-DM."
 # 1. HALAMAN HOME (BERANDA)
 # ==========================================
 if pilihan_menu == "🏠 Home (Beranda)":
-    st.title("📊 Dashboard Analisis Tren & Prediksi Penjualan")
-    st.markdown("##### *Sistem Pendukung Keputusan Berbasis Machine Learning*")
+    st.title("📊 Analisis Tren dan Peramalan Penjualan")
+    st.markdown("##### *Implementasi Machine Learning Menggunakan Algoritma Random Forest Berbasis Framework CRISP-DM*")
     
     st.markdown("""
     <div class="content-card">
-        <h4>👋 Selamat Datang di Sistem Visualisasi Skripsi</h4>
-        <p>Aplikasi web interaktif ini dikembangkan untuk menganalisis tren penjualan historis dan melakukan peramalan (forecasting) pada kategori <b>Technology</b> menggunakan algoritma <b>Random Forest Regression</b> berdasarkan tahapan framework <b>CRISP-DM</b>.</p>
+        <h4>👋 Selamat Datang di Dashboard Penelitian Tugas Akhir</h4>
+        <p>Aplikasi web interaktif ini dirancang untuk menyajikan hasil analisis data historis dan peramalan (<i>forecasting</i>) penjualan pada kategori <b>Technology</b>. Seluruh tahapan perancangan sistem ini dikembangkan secara sistematis berdasarkan metodologi <b>CRISP-DM</b> guna mendukung akurasi evaluasi kinerja model.</p>
     </div>
     """, unsafe_allow_html=True)
 
@@ -130,22 +141,22 @@ if pilihan_menu == "🏠 Home (Beranda)":
     with c1:
         st.markdown(f"""
         <div class="metric-card-sky">
-            <p style="margin:0; font-size: 14px; opacity: 0.9;">📁 FOKUS KATEGORI</p>
-            <h2 style="margin:5px 0 0 0; color: white;">Technology</h2>
+            <p style="margin:0; font-size: 15px; opacity: 0.9;">📁 FOKUS KATEGORI</p>
+            <h2 style="margin:5px 0 0 0; color: white; font-size: 26px;">Technology</h2>
         </div>
         """, unsafe_allow_html=True)
     with c2:
         st.markdown(f"""
         <div class="metric-card-ocean">
-            <p style="margin:0; font-size: 14px; opacity: 0.9;">📅 TOTAL OBSERVASI</p>
-            <h2 style="margin:5px 0 0 0; color: white;">{len(df_monthly)} Bulan</h2>
+            <p style="margin:0; font-size: 15px; opacity: 0.9;">📅 TOTAL OBSERVASI</p>
+            <h2 style="margin:5px 0 0 0; color: white; font-size: 26px;">{len(df_monthly)} Bulan</h2>
         </div>
         """, unsafe_allow_html=True)
     with c3:
         st.markdown(f"""
         <div class="metric-card-navy">
-            <p style="margin:0; font-size: 14px; opacity: 0.9;">🤖 ALGORITMA</p>
-            <h2 style="margin:5px 0 0 0; color: white;">Random Forest</h2>
+            <p style="margin:0; font-size: 15px; opacity: 0.9;">🤖 ALGORITMA</p>
+            <h2 style="margin:5px 0 0 0; color: white; font-size: 26px;">Random Forest</h2>
         </div>
         """, unsafe_allow_html=True)
 
@@ -191,9 +202,8 @@ elif pilihan_menu == "📈 Analisis Tren & Visualisasi":
         title="Distribusi Total Penjualan Per Bulan (Global Superstore)",
         labels={'Total_Sales': 'Total Penjualan (US$)', 'Month': 'Bulan'}
     )
-    # Warna batang grafik menggunakan nuansa biru laut
-    fig_bar.update_traces(marker_color='#0284c7', textfont_size=10, textangle=0, textposition="outside")
-    fig_bar.update_layout(plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)')
+    fig_bar.update_traces(marker_color='#0284c7', textfont_size=12, textangle=0, textposition="outside")
+    fig_bar.update_layout(plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', font=dict(size=14))
     st.plotly_chart(fig_bar, use_container_width=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
@@ -231,7 +241,7 @@ elif pilihan_menu == "🎯 Evaluasi & Prediksi Model":
         title="Perbandingan Nilai Aktual dan Prediksi pada Data Uji",
         color_discrete_map={'Aktual': '#0284c7', 'Prediksi Model': '#38bdf8'}
     )
-    fig_comp.update_layout(plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)')
+    fig_comp.update_layout(plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', font=dict(size=14))
     st.plotly_chart(fig_comp, use_container_width=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
@@ -241,7 +251,7 @@ elif pilihan_menu == "🎯 Evaluasi & Prediksi Model":
     with col_sim1:
         sim_lag_1 = st.number_input("Penjualan Bulan Lalu (Lag 1)", value=float(df_monthly['Total_Sales'].iloc[-1]), format="%.2f")
     with col_sim2:
-        sim_lag_2 = st.number_input("Penjualan 2 Bulan Lang (Lag 2)", value=float(df_monthly['Total_Sales'].iloc[-2]), format="%.2f")
+        sim_lag_2 = st.number_input("Penjualan 2 Bulan Lalu (Lag 2)", value=float(df_monthly['Total_Sales'].iloc[-2]), format="%.2f")
 
     if st.button("🚀 Hitung Prediksi Penjualan", use_container_width=True):
         hasil_sim = model.predict([[sim_lag_1, sim_lag_2]])
