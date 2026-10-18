@@ -12,36 +12,61 @@ st.set_page_config(
     layout="wide"
 )
 
-# Custom CSS untuk membuat tampilan seperti Aplikasi Dashboard Profesional (Card Style)
+# Custom CSS untuk Tema Biru Langit & Biru Laut (Ocean & Sky Blue Theme)
 st.markdown("""
     <style>
-    /* Mengubah warna latar belakang utama */
+    /* Latar Belakang Utama */
     .main {
-        background-color: #f8f9fa;
+        background-color: #f0f7ff;
     }
     
-    /* Styling untuk Menu Sidebar */
+    /* Sidebar Styling */
+    .stSidebar {
+        background-color: #ffffff;
+    }
+    
     .stRadio label p {
-        font-size: 17px !important;
+        font-size: 16px !important;
         font-weight: 600 !important;
+        color: #0f172a;
+    }
+
+    /* Kartu Metrik Gradasi Biru Langit - Biru Laut */
+    .metric-card-sky {
+        background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+        color: white;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(2, 132, 199, 0.25);
+        margin-bottom: 15px;
     }
     
-    /* Styling Kotak Kartu (Card Container) */
-    .card {
+    .metric-card-ocean {
+        background: linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%);
+        color: white;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(3, 105, 161, 0.25);
+        margin-bottom: 15px;
+    }
+
+    .metric-card-navy {
+        background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+        color: white;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(30, 64, 175, 0.25);
+        margin-bottom: 15px;
+    }
+
+    /* Kotak Konten Standar (Card White dengan Aksen Biru) */
+    .content-card {
         background-color: #ffffff;
         padding: 24px;
         border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        box-shadow: 0 4px 12px rgba(14, 165, 233, 0.08);
         margin-bottom: 20px;
-        border: 1px solid #e9ecef;
-    }
-    
-    /* Perbesar teks judul kartu */
-    .card-title {
-        font-size: 18px;
-        font-weight: 700;
-        color: #2c3e50;
-        margin-bottom: 15px;
+        border-left: 5px solid #0284c7;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -94,35 +119,48 @@ if pilihan_menu == "🏠 Home (Beranda)":
     st.markdown("##### *Sistem Pendukung Keputusan Berbasis Machine Learning*")
     
     st.markdown("""
-    <div class="card">
+    <div class="content-card">
         <h4>👋 Selamat Datang di Sistem Visualisasi Skripsi</h4>
         <p>Aplikasi web interaktif ini dikembangkan untuk menganalisis tren penjualan historis dan melakukan peramalan (forecasting) pada kategori <b>Technology</b> menggunakan algoritma <b>Random Forest Regression</b> berdasarkan tahapan framework <b>CRISP-DM</b>.</p>
     </div>
     """, unsafe_allow_html=True)
 
-    # Kotak Metrik Ringkas dalam Card
-    col1, col2, col3 = st.columns(3)
-    with col1:
-        st.metric(label="📁 Fokus Kategori", value="Technology")
-    with col2:
-        st.metric(label="📅 Total Observasi", value=f"{len(df_monthly)} Bulan")
-    with col3:
-        st.metric(label="🤖 Algoritma", value="Random Forest")
+    # Kotak Kartu Gradasi Biru Langit - Biru Laut
+    c1, c2, c3 = st.columns(3)
+    with c1:
+        st.markdown(f"""
+        <div class="metric-card-sky">
+            <p style="margin:0; font-size: 14px; opacity: 0.9;">📁 FOKUS KATEGORI</p>
+            <h2 style="margin:5px 0 0 0; color: white;">Technology</h2>
+        </div>
+        """, unsafe_allow_html=True)
+    with c2:
+        st.markdown(f"""
+        <div class="metric-card-ocean">
+            <p style="margin:0; font-size: 14px; opacity: 0.9;">📅 TOTAL OBSERVASI</p>
+            <h2 style="margin:5px 0 0 0; color: white;">{len(df_monthly)} Bulan</h2>
+        </div>
+        """, unsafe_allow_html=True)
+    with c3:
+        st.markdown(f"""
+        <div class="metric-card-navy">
+            <p style="margin:0; font-size: 14px; opacity: 0.9;">🤖 ALGORITMA</p>
+            <h2 style="margin:5px 0 0 0; color: white;">Random Forest</h2>
+        </div>
+        """, unsafe_allow_html=True)
 
-    st.markdown("<br>", unsafe_allow_html=True)
-    
     # Identitas Peneliti dalam Card
     st.markdown("""
-    <div class="card">
-        <h4 style="margin-bottom: 15px;">🎓 Identitas Penelitian & Peneliti</h4>
-        <hr style="margin: 5px 0 15px 0;">
-        <div style="display: flex; justify-content: space-between;">
-            <div>
+    <div class="content-card" style="border-left-color: #2563eb;">
+        <h4 style="margin-bottom: 15px; color: #0f172a;">🎓 Identitas Penelitian & Peneliti</h4>
+        <hr style="margin: 5px 0 15px 0; border: 0; border-top: 1px solid #bae6fd;">
+        <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 250px;">
                 <p><b>Nama Mahasiswa:</b> Yasindy Alfiyana</p>
                 <p><b>NIM:</b> 43230168</p>
                 <p><b>Program Studi:</b> Strata 1 (S1) Sistem Informasi</p>
             </div>
-            <div>
+            <div style="flex: 1; min-width: 250px;">
                 <p><b>Perguruan Tinggi:</b> STMIK IKMI Cirebon</p>
                 <p><b>Pembimbing I:</b> Khaerul Anam, M.Kom.</p>
                 <p><b>Pembimbing II:</b> Umi Hayati, M.Kom.</p>
@@ -140,21 +178,21 @@ elif pilihan_menu == "📈 Analisis Tren & Visualisasi":
     st.markdown("Visualisasi grafik interaktif perkembangan transaksi kategori *Technology*.")
 
     m1, m2, m3 = st.columns(3)
-    m1.metric("Total Penjualan Keseluruhan", f"US$ {df_monthly['Total_Sales'].sum():,.0f}")
-    m2.metric("Rata-rata Penjualan / Bulan", f"US$ {df_monthly['Total_Sales'].mean():,.0f}")
-    m3.metric("Jumlah Bulan Observasi", f"{len(df_monthly)} Bulan")
+    m1.metric("💰 Total Penjualan", f"US$ {df_monthly['Total_Sales'].sum():,.0f}")
+    m2.metric("📊 Rata-rata / Bulan", f"US$ {df_monthly['Total_Sales'].mean():,.0f}")
+    m3.metric("📅 Jumlah Bulan", f"{len(df_monthly)} Bulan")
 
     st.markdown("<br>", unsafe_allow_html=True)
     
-    # Bungkus Grafik di dalam Card Putih
-    st.markdown('<div class="card">', unsafe_allow_html=True)
+    st.markdown('<div class="content-card">', unsafe_allow_html=True)
     fig_bar = px.bar(
         df_monthly, x='Month', y='Total_Sales',
         text_auto='.2s',
         title="Distribusi Total Penjualan Per Bulan (Global Superstore)",
         labels={'Total_Sales': 'Total Penjualan (US$)', 'Month': 'Bulan'}
     )
-    fig_bar.update_traces(marker_color='#0066cc', textfont_size=10, textangle=0, textposition="outside")
+    # Warna batang grafik menggunakan nuansa biru laut
+    fig_bar.update_traces(marker_color='#0284c7', textfont_size=10, textangle=0, textposition="outside")
     fig_bar.update_layout(plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)')
     st.plotly_chart(fig_bar, use_container_width=True)
     st.markdown('</div>', unsafe_allow_html=True)
@@ -169,7 +207,7 @@ elif pilihan_menu == "🎯 Evaluasi & Prediksi Model":
     st.title("🎯 Evaluasi Model & Simulasi Prediksi")
     st.markdown("Pengujian performa model *Random Forest* dan panel simulasi interaktif.")
 
-    st.markdown('<div class="card">', unsafe_allow_html=True)
+    st.markdown('<div class="content-card" style="border-left-color: #0ea5e9;">', unsafe_allow_html=True)
     st.subheader("📉 Metrik Evaluasi Pengujian Model (Data Testing)")
     e1, e2, e3 = st.columns(3)
     e1.metric("MAE (Mean Absolute Error)", f"US$ {mae:,.2f}")
@@ -177,8 +215,7 @@ elif pilihan_menu == "🎯 Evaluasi & Prediksi Model":
     e3.metric("R² Score (Determinasi)", f"{r2:.4f}")
     st.markdown('</div>', unsafe_allow_html=True)
 
-    # Bungkus Grafik Komparasi dalam Card
-    st.markdown('<div class="card">', unsafe_allow_html=True)
+    st.markdown('<div class="content-card" style="border-left-color: #2563eb;">', unsafe_allow_html=True)
     st.subheader("📉 Grafik Perbandingan: Aktual vs Prediksi Model")
     df_comparison = pd.DataFrame({
         'Aktual': y_test.values,
@@ -192,20 +229,19 @@ elif pilihan_menu == "🎯 Evaluasi & Prediksi Model":
         df_melted, x='Month', y='Nilai Sales', color='Tipe',
         markers=True,
         title="Perbandingan Nilai Aktual dan Prediksi pada Data Uji",
-        color_discrete_map={'Aktual': '#0066cc', 'Prediksi Model': '#00adb5'}
+        color_discrete_map={'Aktual': '#0284c7', 'Prediksi Model': '#38bdf8'}
     )
     fig_comp.update_layout(plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)')
     st.plotly_chart(fig_comp, use_container_width=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
-    # Panel Simulasi di dalam Card
-    st.markdown('<div class="card">', unsafe_allow_html=True)
+    st.markdown('<div class="content-card" style="border-left-color: #1e40af;">', unsafe_allow_html=True)
     st.subheader("⚙️ Panel Simulasi Prediksi Penjualan Bulanan")
     col_sim1, col_sim2 = st.columns(2)
     with col_sim1:
         sim_lag_1 = st.number_input("Penjualan Bulan Lalu (Lag 1)", value=float(df_monthly['Total_Sales'].iloc[-1]), format="%.2f")
     with col_sim2:
-        sim_lag_2 = st.number_input("Penjualan 2 Bulan Lalu (Lag 2)", value=float(df_monthly['Total_Sales'].iloc[-2]), format="%.2f")
+        sim_lag_2 = st.number_input("Penjualan 2 Bulan Lang (Lag 2)", value=float(df_monthly['Total_Sales'].iloc[-2]), format="%.2f")
 
     if st.button("🚀 Hitung Prediksi Penjualan", use_container_width=True):
         hasil_sim = model.predict([[sim_lag_1, sim_lag_2]])
@@ -220,6 +256,6 @@ elif pilihan_menu == "📋 Tabel Data Historis":
     st.title("📋 Tabel Data Historis & Rekayasa Fitur")
     st.markdown("Rincian data transaksi bulanan kategori *Technology* beserta atribut *Lag*.")
     
-    st.markdown('<div class="card">', unsafe_allow_html=True)
+    st.markdown('<div class="content-card">', unsafe_allow_html=True)
     st.dataframe(df_monthly, use_container_width=True)
     st.markdown('</div>', unsafe_allow_html=True)
