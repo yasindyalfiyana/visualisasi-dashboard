@@ -12,10 +12,10 @@ st.set_page_config(
     layout="wide"
 )
 
-# Custom CSS untuk Memperbesar Ukuran Font Secara Menyeluruh & Tema Biru
+# Custom CSS untuk Responsif HP & Memastikan Warna Teks Kontras Sempurna
 st.markdown("""
     <style>
-    /* Memperbesar ukuran font dasar untuk seluruh teks aplikasi */
+    /* Memperbesar ukuran font dasar */
     html, body, [class*="css"] {
         font-size: 17px !important;
     }
@@ -33,13 +33,13 @@ st.markdown("""
     .stRadio label p {
         font-size: 18px !important;
         font-weight: 600 !important;
-        color: #0f172a;
+        color: #0f172a !important;
     }
 
     /* Kartu Metrik Gradasi Biru Langit - Biru Laut */
     .metric-card-sky {
         background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
-        color: white;
+        color: white !important;
         padding: 22px;
         border-radius: 12px;
         box-shadow: 0 4px 15px rgba(2, 132, 199, 0.25);
@@ -48,7 +48,7 @@ st.markdown("""
     
     .metric-card-ocean {
         background: linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%);
-        color: white;
+        color: white !important;
         padding: 22px;
         border-radius: 12px;
         box-shadow: 0 4px 15px rgba(3, 105, 161, 0.25);
@@ -57,22 +57,26 @@ st.markdown("""
 
     .metric-card-navy {
         background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
-        color: white;
+        color: white !important;
         padding: 22px;
         border-radius: 12px;
         box-shadow: 0 4px 15px rgba(30, 64, 175, 0.25);
         margin-bottom: 15px;
     }
 
-    /* Kotak Konten Standar (Card White dengan Aksen Biru) */
+    /* Kotak Konten Standar (Card White) - Memaksa Teks Selalu Gelap & Terbaca di HP */
     .content-card {
-        background-color: #ffffff;
+        background-color: #ffffff !important;
+        color: #0f172a !important;
         padding: 26px;
         border-radius: 12px;
         box-shadow: 0 4px 12px rgba(14, 165, 233, 0.08);
         margin-bottom: 20px;
         border-left: 6px solid #0284c7;
-        font-size: 17px;
+    }
+
+    .content-card h4, .content-card p, .content-card b, .content-card li {
+        color: #0f172a !important;
     }
     
     /* Memperbesar teks di dalam komponen dataframe/tabel */
@@ -142,28 +146,28 @@ if pilihan_menu == "🏠 Home (Beranda)":
         st.markdown(f"""
         <div class="metric-card-sky">
             <p style="margin:0; font-size: 15px; opacity: 0.9;">📁 FOKUS KATEGORI</p>
-            <h2 style="margin:5px 0 0 0; color: white; font-size: 26px;">Technology</h2>
+            <h2 style="margin:5px 0 0 0; color: white !important; font-size: 26px;">Technology</h2>
         </div>
         """, unsafe_allow_html=True)
     with c2:
         st.markdown(f"""
         <div class="metric-card-ocean">
             <p style="margin:0; font-size: 15px; opacity: 0.9;">📅 TOTAL OBSERVASI</p>
-            <h2 style="margin:5px 0 0 0; color: white; font-size: 26px;">{len(df_monthly)} Bulan</h2>
+            <h2 style="margin:5px 0 0 0; color: white !important; font-size: 26px;">{len(df_monthly)} Bulan</h2>
         </div>
         """, unsafe_allow_html=True)
     with c3:
         st.markdown(f"""
         <div class="metric-card-navy">
             <p style="margin:0; font-size: 15px; opacity: 0.9;">🤖 ALGORITMA</p>
-            <h2 style="margin:5px 0 0 0; color: white; font-size: 26px;">Random Forest</h2>
+            <h2 style="margin:5px 0 0 0; color: white !important; font-size: 26px;">Random Forest</h2>
         </div>
         """, unsafe_allow_html=True)
 
     # Identitas Peneliti dalam Card
     st.markdown("""
     <div class="content-card" style="border-left-color: #2563eb;">
-        <h4 style="margin-bottom: 15px; color: #0f172a;">🎓 Identitas Penelitian & Peneliti</h4>
+        <h4 style="margin-bottom: 15px; color: #0f172a !important;">🎓 Identitas Penelitian & Peneliti</h4>
         <hr style="margin: 5px 0 15px 0; border: 0; border-top: 1px solid #bae6fd;">
         <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
             <div style="flex: 1; min-width: 250px;">
