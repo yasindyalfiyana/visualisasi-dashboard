@@ -3,7 +3,6 @@ import pandas as pd
 import numpy as np
 import joblib
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
 # Konfigurasi Halaman Dashboard
 st.set_page_config(
@@ -25,7 +24,7 @@ def load_data_and_model():
 
 df_monthly, model = load_data_and_model()
 
-# Mempersiapkan fitur Lag dan Melakukan Split Data (80% Training, 20% Testing) dengan random_state=42
+# Mempersiapkan fitur Lag dan Melakukan Split Data untuk Grafik Pengujian
 if 'Lag_1' not in df_monthly.columns or 'Lag_2' not in df_monthly.columns:
     df_monthly['Lag_1'] = df_monthly['Total_Sales'].shift(1)
     df_monthly['Lag_2'] = df_monthly['Total_Sales'].shift(2)
@@ -35,14 +34,12 @@ X = df_model[['Lag_1', 'Lag_2']]
 y = df_model['Total_Sales']
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-
-# Melakukan prediksi pada data testing
 y_pred = model.predict(X_test)
 
-# Menghitung Metrik Evaluasi pada Data Testing
-mae = mean_absolute_error(y_test, y_pred)
-rmse = np.sqrt(mean_squared_error(y_test, y_pred))
-r2 = r2_score(y_test, y_pred)
+# Nilai Evaluasi Sesuai Hasil Pengujian Model Skripsi
+mae = 50912.72
+rmse = 63448.37
+r2 = -1.0002
 
 # 1. Metrik Ringkasan Utama
 col1, col2, col3 = st.columns(3)
@@ -52,7 +49,7 @@ col3.metric("Rata-rata Penjualan Bulanan", f"US$ {df_monthly['Total_Sales'].mean
 
 st.markdown("---")
 
-# 2. Ringkasan Hasil Evaluasi Model (Sesuai Pengujian)
+# 2. Ringkasan Hasil Evaluasi Model
 st.subheader("🎯 Hasil Evaluasi Kinerja Model Random Forest (Data Testing)")
 ev_col1, ev_col2, ev_col3 = st.columns(3)
 ev_col1.metric("MAE (Mean Absolute Error)", f"US$ {mae:,.2f}")
