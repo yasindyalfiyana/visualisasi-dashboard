@@ -64,7 +64,7 @@ st.markdown("""
         margin-bottom: 15px;
     }
 
-    /* Kotak Konten Standar (Card White) - Memaksa Teks Selalu Gelap & Terbaca di HP */
+    /* Kotak Konten Standar (Card White) */
     .content-card {
         background-color: #ffffff !important;
         color: #0f172a !important;
@@ -190,7 +190,7 @@ if pilihan_menu == "🏠 Home (Beranda)":
 # ==========================================
 elif pilihan_menu == "📈 Analisis Tren & Visualisasi":
     st.title("📈 Analisis Tren Penjualan Bulanan")
-    st.markdown("Visualisasi grafik interaktif perkembangan transaksi kategori *Technology*.")
+    st.markdown("Visualisasi grafik garis (*line chart*) interaktif perkembangan transaksi kategori *Technology*.")
 
     m1, m2, m3 = st.columns(3)
     m1.metric("💰 Total Penjualan", f"US$ {df_monthly['Total_Sales'].sum():,.0f}")
@@ -200,18 +200,21 @@ elif pilihan_menu == "📈 Analisis Tren & Visualisasi":
     st.markdown("<br>", unsafe_allow_html=True)
     
     st.markdown('<div class="content-card">', unsafe_allow_html=True)
-    fig_bar = px.bar(
+    
+    # Menggunakan Line Chart Interaktif (Plotly)
+    fig_line = px.line(
         df_monthly, x='Month', y='Total_Sales',
-        text_auto='.2s',
-        title="Distribusi Total Penjualan Per Bulan (Global Superstore)",
-        labels={'Total_Sales': 'Total Penjualan (US$)', 'Month': 'Bulan'}
+        markers=True,
+        title="Grafik Tren Total Penjualan Bulanan Kategori Technology",
+        labels={'Total_Sales': 'Total Penjualan (US$)', 'Month': 'Bulan Transaksi'}
     )
-    fig_bar.update_traces(marker_color='#0284c7', textfont_size=12, textangle=0, textposition="outside")
-    fig_bar.update_layout(plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', font=dict(size=14))
-    st.plotly_chart(fig_bar, use_container_width=True)
+    fig_line.update_traces(line=dict(color='#0284c7', width=3), marker=dict(size=8, color='#38bdf8'))
+    fig_line.update_layout(plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', font=dict(size=14))
+    st.plotly_chart(fig_line, use_container_width=True)
+    
     st.markdown('</div>', unsafe_allow_html=True)
 
-    st.info("💡 **Analisis Tren:** Grafik di atas menunjukkan pola fluktuasi historis bulanan yang menjadi dasar pembelajaran bagi model *Machine Learning*.")
+    st.info("💡 **Analisis Tren:** Grafik garis di atas merepresentasikan pergerakan deret waktu (*time series*) total penjualan bulanan kategori Technology secara kronologis.")
 
 
 # ==========================================
