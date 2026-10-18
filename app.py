@@ -12,7 +12,7 @@ st.set_page_config(
     layout="wide"
 )
 
-# Custom CSS untuk Responsif HP & Memastikan Warna Teks Kontras Sempurna
+# Custom CSS Bersih Tanpa Border Aneh
 st.markdown("""
     <style>
     /* Memperbesar ukuran font dasar */
@@ -64,7 +64,7 @@ st.markdown("""
         margin-bottom: 15px;
     }
 
-    /* Kotak Konten Standar (Card White) */
+    /* Kotak Konten Standar (Card White Bersih Tanpa Garis Samping) */
     .content-card {
         background-color: #ffffff !important;
         color: #0f172a !important;
@@ -72,7 +72,7 @@ st.markdown("""
         border-radius: 12px;
         box-shadow: 0 4px 12px rgba(14, 165, 233, 0.08);
         margin-bottom: 20px;
-        border-left: 6px solid #0284c7;
+        border: none !important;
     }
 
     .content-card h4, .content-card p, .content-card b, .content-card li {
@@ -166,9 +166,9 @@ if pilihan_menu == "🏠 Home (Beranda)":
 
     # Identitas Peneliti dalam Card
     st.markdown("""
-    <div class="content-card" style="border-left-color: #2563eb;">
+    <div class="content-card">
         <h4 style="margin-bottom: 15px; color: #0f172a !important;">🎓 Identitas Penelitian & Peneliti</h4>
-        <hr style="margin: 5px 0 15px 0; border: 0; border-top: 1px solid #bae6fd;">
+        <hr style="margin: 5px 0 15px 0; border: 0; border-top: 1px solid #e2e8f0;">
         <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
             <div style="flex: 1; min-width: 250px;">
                 <p><b>Nama Mahasiswa:</b> Yasindy Alfiyana</p>
@@ -200,8 +200,6 @@ elif pilihan_menu == "📈 Analisis Tren & Visualisasi":
     st.markdown("<br>", unsafe_allow_html=True)
     
     st.markdown('<div class="content-card">', unsafe_allow_html=True)
-    
-    # Menggunakan Line Chart Interaktif (Plotly)
     fig_line = px.line(
         df_monthly, x='Month', y='Total_Sales',
         markers=True,
@@ -211,7 +209,6 @@ elif pilihan_menu == "📈 Analisis Tren & Visualisasi":
     fig_line.update_traces(line=dict(color='#0284c7', width=3), marker=dict(size=8, color='#38bdf8'))
     fig_line.update_layout(plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', font=dict(size=14))
     st.plotly_chart(fig_line, use_container_width=True)
-    
     st.markdown('</div>', unsafe_allow_html=True)
 
     st.info("💡 **Analisis Tren:** Grafik garis di atas merepresentasikan pergerakan deret waktu (*time series*) total penjualan bulanan kategori Technology secara kronologis.")
@@ -224,7 +221,7 @@ elif pilihan_menu == "🎯 Evaluasi & Prediksi Model":
     st.title("🎯 Evaluasi Model & Simulasi Prediksi")
     st.markdown("Pengujian performa model *Random Forest* dan panel simulasi interaktif.")
 
-    st.markdown('<div class="content-card" style="border-left-color: #0ea5e9;">', unsafe_allow_html=True)
+    st.markdown('<div class="content-card">', unsafe_allow_html=True)
     st.subheader("📉 Metrik Evaluasi Pengujian Model (Data Testing)")
     e1, e2, e3 = st.columns(3)
     e1.metric("MAE (Mean Absolute Error)", f"US$ {mae:,.2f}")
@@ -232,7 +229,7 @@ elif pilihan_menu == "🎯 Evaluasi & Prediksi Model":
     e3.metric("R² Score (Determinasi)", f"{r2:.4f}")
     st.markdown('</div>', unsafe_allow_html=True)
 
-    st.markdown('<div class="content-card" style="border-left-color: #2563eb;">', unsafe_allow_html=True)
+    st.markdown('<div class="content-card">', unsafe_allow_html=True)
     st.subheader("📉 Grafik Perbandingan: Aktual vs Prediksi Model")
     df_comparison = pd.DataFrame({
         'Aktual': y_test.values,
@@ -252,7 +249,7 @@ elif pilihan_menu == "🎯 Evaluasi & Prediksi Model":
     st.plotly_chart(fig_comp, use_container_width=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
-    st.markdown('<div class="content-card" style="border-left-color: #1e40af;">', unsafe_allow_html=True)
+    st.markdown('<div class="content-card">', unsafe_allow_html=True)
     st.subheader("⚙️ Panel Simulasi Prediksi Penjualan Bulanan")
     col_sim1, col_sim2 = st.columns(2)
     with col_sim1:
