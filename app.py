@@ -3,7 +3,6 @@ import pandas as pd
 import numpy as np
 import joblib
 import plotly.express as px
-from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
 # Konfigurasi Halaman Dashboard (Layout Lebar)
@@ -99,7 +98,7 @@ def load_data_and_model():
 
 df_monthly, model = load_data_and_model()
 
-# Persiapan Data & Split untuk Evaluasi secara Dinamis
+# Persiapan Data & Pembagian Kronologis (Sama persis dengan Google Colab)
 if 'Lag_1' not in df_monthly.columns or 'Lag_2' not in df_monthly.columns:
     df_monthly['Lag_1'] = df_monthly['Total_Sales'].shift(1)
     df_monthly['Lag_2'] = df_monthly['Total_Sales'].shift(2)
@@ -108,7 +107,12 @@ df_model = df_monthly.dropna().copy()
 X = df_model[['Lag_1', 'Lag_2']]
 y = df_model['Total_Sales']
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+# Split Data Kronologis 80:20
+train_size = int(len(df_model) * 0.8)
+X_train = X.iloc[:train_size]
+X_test = X.iloc[train_size:]
+y_train = y.iloc[:train_size]
+y_test = y.iloc[train_size:]
 
 # Perhitungan Metrik Evaluasi Model secara Dinamis
 y_pred = model.predict(X_test)
@@ -143,7 +147,6 @@ if pilihan_menu == "🏠 Home (Beranda)":
     </div>
     """, unsafe_allow_html=True)
 
-    # Kotak Kartu Gradasi Biru Langit - Biru Laut
     c1, c2, c3 = st.columns(3)
     with c1:
         st.markdown(f"""
@@ -167,7 +170,6 @@ if pilihan_menu == "🏠 Home (Beranda)":
         </div>
         """, unsafe_allow_html=True)
 
-    # Identitas Peneliti dalam Card
     st.markdown("""
     <div class="content-card">
         <h4 style="margin-bottom: 15px; color: #0f172a !important;">🎓 Identitas Penelitian & Peneliti</h4>
