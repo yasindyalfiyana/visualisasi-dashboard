@@ -4,6 +4,7 @@ import numpy as np
 import joblib
 import plotly.express as px
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
 # Konfigurasi Halaman Dashboard (Layout Lebar)
 st.set_page_config(
@@ -98,7 +99,7 @@ def load_data_and_model():
 
 df_monthly, model = load_data_and_model()
 
-# Persiapan Data & Split untuk Evaluasi
+# Persiapan Data & Split untuk Evaluasi secara Dinamis
 if 'Lag_1' not in df_monthly.columns or 'Lag_2' not in df_monthly.columns:
     df_monthly['Lag_1'] = df_monthly['Total_Sales'].shift(1)
     df_monthly['Lag_2'] = df_monthly['Total_Sales'].shift(2)
@@ -108,12 +109,12 @@ X = df_model[['Lag_1', 'Lag_2']]
 y = df_model['Total_Sales']
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-y_pred = model.predict(X_test)
 
-# Nilai Evaluasi Model
-mae = 50912.72
-rmse = 63448.37
-r2 = -1.0002
+# Perhitungan Metrik Evaluasi Model secara Dinamis
+y_pred = model.predict(X_test)
+mae = mean_absolute_error(y_test, y_pred)
+rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+r2 = r2_score(y_test, y_pred)
 
 # --- SIDEBAR: NAVIGASI MENU ---
 st.sidebar.title("📌 Navigasi Menu")
