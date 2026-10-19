@@ -132,7 +132,7 @@ st.sidebar.info("💡 **Sistem Pendukung Keputusan:** Random Forest & CRISP-DM."
 # 1. HALAMAN HOME (BERANDA)
 # ==========================================
 if pilihan_menu == "🏠 Home (Beranda)":
-    st.title("📊 Analisis Tren dan Peramalan Penjualan")
+    st.title("📊 Analisis Tren dan Prediksi Penjualan")
     st.markdown("##### *Implementasi Machine Learning Menggunakan Algoritma Random Forest Berbasis Framework CRISP-DM*")
     
     st.markdown("""
